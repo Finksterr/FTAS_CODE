@@ -3,6 +3,7 @@
 #include "rtc_time.h"
 #include "lights.h"
 #include "pumps.h"
+#include "display.h"
 
 
 void setup() {
@@ -13,6 +14,7 @@ void setup() {
     initLampRelay(); // initialize relay pin
     initLedPins();   // initialize LED pins
     initPumpPins();  // Initialize pump and float switch pins
+    initDisplay();   // initialize OLED display
 }
 
 void loop() {
@@ -26,6 +28,8 @@ void loop() {
       Serial.println(currentTime.second);
       */
 
+    updateSystemDisplay(STATUS_IDLE); // update display with current time and status
+    
     updateLampState(); // control lamp relay
 
    /* Debug print for lamp state
