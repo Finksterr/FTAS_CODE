@@ -7,17 +7,17 @@
 
 // Setup relay pin
 void initLampRelay() {
-	pinMode(lampRelayPin, OUTPUT);
-	digitalWrite(lampRelayPin, LOW); // Start with lamp OFF
+	pinMode(LAMP_RELAY_PIN, OUTPUT);
+	digitalWrite(LAMP_RELAY_PIN, LOW); // Start with lamp OFF
 }
 
 // Setup LED pins for PWM
 void initLedPins() {
-	pinMode(dayLedPin, OUTPUT);
-	pinMode(nightLedPin, OUTPUT);
+	pinMode(DAY_LED_PIN, OUTPUT);
+	pinMode(NIGHT_LED_PIN, OUTPUT);
 	// Attach pins to PWM channels
-	ledcAttachPin(dayLedPin, 0); // channel 0 for day
-	ledcAttachPin(nightLedPin, 1); // channel 1 for night
+	ledcAttachPin(DAY_LED_PIN, 0); // channel 0 for day
+	ledcAttachPin(NIGHT_LED_PIN, 1); // channel 1 for night
 	ledcSetup(0, 5000, 8); // channel 0, 5kHz, 8-bit
 	ledcSetup(1, 5000, 8); // channel 1, 5kHz, 8-bit
 	ledcWrite(0, 0);
@@ -46,9 +46,9 @@ void updateLampState() {
 	// Define day as 7:00 to 19:00
 	int hour = currentTime.hour;
 	if (hour >= 7 && hour < 19) {
-		digitalWrite(lampRelayPin, HIGH); // Lamp ON
+	digitalWrite(LAMP_RELAY_PIN, HIGH); // Lamp ON
 	} else {
-		digitalWrite(lampRelayPin, LOW);  // Lamp OFF
+	digitalWrite(LAMP_RELAY_PIN, LOW);  // Lamp OFF
 	}
 }
 

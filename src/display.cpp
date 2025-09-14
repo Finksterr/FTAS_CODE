@@ -65,6 +65,12 @@ void updateSystemDisplay(SystemStatus status) {
 		case STATUS_WAITING_NEXT_CYCLE:
 			display.println("Waiting for Next Cycle");
 			break;
+		case STATUS_FEEDER1_RUNNING:
+			display.println("Feeder1 Active");
+			break;
+		case STATUS_FEEDER2_RUNNING:
+			display.println("Feeder2 Active");
+			break;
 		default:
 			display.println("Unknown Status");
 			break;

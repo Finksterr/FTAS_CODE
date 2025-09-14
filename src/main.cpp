@@ -4,6 +4,7 @@
 #include "lights.h"
 #include "pumps.h"
 #include "display.h"
+#include "feeder.h"
 
 
 void setup() {
@@ -15,6 +16,7 @@ void setup() {
     initLedPins();   // initialize LED pins
     initPumpPins();  // Initialize pump and float switch pins
     initDisplay();   // initialize OLED display
+    initFeeder();    // initialize feeders
 }
 
 void loop() {
@@ -29,15 +31,14 @@ void loop() {
       */
 
     updateSystemDisplay(STATUS_IDLE); // update display with current time and status
-    
     updateLampState(); // control lamp relay
 
    /* Debug print for lamp state
-      if (digitalRead(lampRelayPin) == HIGH) {
-          Serial.println("Lamp is ON");
-      } else {
-          Serial.println("Lamp is OFF");
-      }
+    if (digitalRead(LAMP_RELAY_PIN) == HIGH) {
+      Serial.println("Lamp is ON");
+    } else {
+      Serial.println("Lamp is OFF");
+    }
       */
 
     updateLedState();  // control day/night LED
@@ -50,6 +51,7 @@ void loop() {
       */
     
     handleWeeklyWaterChange(); // Weekly water change scheduling
+    handleFeederSchedule();    // Feeder scheduling
 
     delay(1000);  // update once per second
 }
