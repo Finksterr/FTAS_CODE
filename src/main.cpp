@@ -1,22 +1,49 @@
+
 #include <Arduino.h>
 #include "rtc_time.h"
+#include "lights.h"
+
 
 void setup() {
     Serial.begin(115200);
     Wire.begin();
 
-    initRTC();  // initialize the RTC
+    initRTC();       // initialize the RTC
+    initLampRelay(); // initialize relay pin
+    initLedPins();   // initialize LED pins
 }
+
 
 void loop() {
     updateTime();  // refresh global currentTime
 
-    // Debug print
-    Serial.print(currentTime.hour);
-    Serial.print(":");
-    Serial.print(currentTime.minute);
-    Serial.print(":");
-    Serial.println(currentTime.second);
+      /* Debug print for RTC time
+      Serial.print(currentTime.hour);
+      Serial.print(":");
+      Serial.print(currentTime.minute);
+      Serial.print(":");
+      Serial.println(currentTime.second);
+      */
+
+  updateLampState(); // control lamp relay
+
+   /* Debug print for lamp state
+      if (digitalRead(lampRelayPin) == HIGH) {
+          Serial.println("Lamp is ON");
+      } else {
+          Serial.println("Lamp is OFF");
+      }
+      */
+
+  updateLedState();  // control day/night LED
+
+   /* Debug print for LED state
+      Serial.print("Day LED Brightness: ");
+      Serial.println(ledcRead(0)); // channel 0 for day
+      Serial.print("Night LED Brightness: ");
+      Serial.println(ledcRead(1)); // channel 1 for night
+      */
+
 
     delay(1000);  // update once per second
 }
