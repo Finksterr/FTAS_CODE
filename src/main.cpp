@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include "rtc_time.h"
 #include "lights.h"
+#include "pumps.h"
 
 
 void setup() {
@@ -11,8 +12,8 @@ void setup() {
     initRTC();       // initialize the RTC
     initLampRelay(); // initialize relay pin
     initLedPins();   // initialize LED pins
+    initPumpPins();  // Initialize pump and float switch pins
 }
-
 
 void loop() {
     updateTime();  // refresh global currentTime
@@ -25,7 +26,7 @@ void loop() {
       Serial.println(currentTime.second);
       */
 
-  updateLampState(); // control lamp relay
+    updateLampState(); // control lamp relay
 
    /* Debug print for lamp state
       if (digitalRead(lampRelayPin) == HIGH) {
@@ -35,7 +36,7 @@ void loop() {
       }
       */
 
-  updateLedState();  // control day/night LED
+    updateLedState();  // control day/night LED
 
    /* Debug print for LED state
       Serial.print("Day LED Brightness: ");
@@ -43,7 +44,8 @@ void loop() {
       Serial.print("Night LED Brightness: ");
       Serial.println(ledcRead(1)); // channel 1 for night
       */
-
+    
+    handleWeeklyWaterChange(); // Weekly water change scheduling
 
     delay(1000);  // update once per second
 }
