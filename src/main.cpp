@@ -1,18 +1,22 @@
 #include <Arduino.h>
-
-// put function declarations here:
-int myFunction(int, int);
+#include "rtc_time.h"
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    Serial.begin(115200);
+    Wire.begin();
+
+    initRTC();  // initialize the RTC
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+    updateTime();  // refresh global currentTime
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    // Debug print
+    Serial.print(currentTime.hour);
+    Serial.print(":");
+    Serial.print(currentTime.minute);
+    Serial.print(":");
+    Serial.println(currentTime.second);
+
+    delay(1000);  // update once per second
 }
